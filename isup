@@ -1,0 +1,26 @@
+#! /usr/bin/env php
+<?php
+
+$possibleFiles = [
+    __DIR__ . '/../../autoload.php',
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/vendor/autoload.php'
+];
+
+foreach ($possibleFiles as $file) {
+    if (file_exists($file)) {
+        $theFile = $file;
+        break;
+    }
+}
+
+if (!isset($theFile)) {
+    throw new Exception('You need to set up the project dependencies using Composer');
+}
+
+require $theFile;
+unset($possibleFiles, $theFile);
+
+(new Alexsoft\Isup\Check())->check($argv[1]);
+
+exit(0);

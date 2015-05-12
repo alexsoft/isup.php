@@ -1,0 +1,24 @@
+{
+  "name": "alexsoft/isup",
+  "description": "Simple website status checker based on isup.me.",
+  "keywords": [
+    "isup",
+    "isup.me"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alex Plekhanov",
+      "email": "alex@plekhanov.us"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Alexsoft\\Isup\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}
