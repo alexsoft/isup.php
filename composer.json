@@ -3,7 +3,8 @@
   "description": "Simple website status checker based on isup.me.",
   "keywords": [
     "isup",
-    "isup.me"
+    "isitup",
+    "isitup.org"
   ],
   "license": "MIT",
   "authors": [

@@ -21,6 +21,16 @@ if (!isset($theFile)) {
 require $theFile;
 unset($possibleFiles, $theFile);
 
-(new Alexsoft\Isup\Check())->check($argv[1]);
+if ($argc < 2) {
+    echo "Please specify site you want to check!\n";
+    exit(1);
+}
+
+$domains = $argv;
+array_shift($domains);
+
+foreach ($domains as $domain) {
+    (new Alexsoft\Isup\Check)->check($domain);
+}
 
 exit(0);
