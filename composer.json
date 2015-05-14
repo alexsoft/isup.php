@@ -21,5 +21,8 @@
       "Alexsoft\\Isup\\": "src/"
     }
   },
+  "bin": [
+    "isup"
+  ],
   "minimum-stability": "stable"
 }
