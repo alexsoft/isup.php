@@ -1,8 +1,8 @@
 <?php
 namespace Alexsoft\Isup;
 
-class Check {
-
+class Check
+{
     const STATUS_WEBSITE_IS_UP   = 1;
     const STATUS_WEBSITE_IS_DOWN = 2;
     const STATUS_NOT_WEBSITE     = 3;
@@ -17,14 +17,16 @@ class Check {
 
     protected $url = 'http://isitup.org/%s.json';
 
-    public function check($domain) {
+    public function check($domain)
+    {
         $status = $this->getStatus($domain);
 
         echo sprintf($this->messages[$status], $domain);
         echo "\n";
     }
 
-    protected function getStatus($domain) {
+    protected function getStatus($domain)
+    {
         $opts = [
             'http' => array(
                 'method' => "GET",
@@ -42,5 +44,4 @@ class Check {
 
         return $content['status_code'];
     }
-
 }
