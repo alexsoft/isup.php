@@ -4,7 +4,7 @@ namespace Alexsoft\Isup;
 
 final class IsItUpOrgClient
 {
-    CONST URL = 'https://isitup.org/%s.json';
+    const URL = 'https://isitup.org/%s.json';
 
     public function getContent($domain)
     {
