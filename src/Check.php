@@ -1,47 +1,64 @@
 <?php
+
 namespace Alexsoft\Isup;
+
+use Alexsoft\Isup\Exceptions\UnexpectedResponseStatusException;
 
 class Check
 {
-    const STATUS_WEBSITE_IS_UP   = 1;
+    const STATUS_WEBSITE_IS_UP = 1;
     const STATUS_WEBSITE_IS_DOWN = 2;
-    const STATUS_NOT_WEBSITE     = 3;
-    const STATUS_API_ERROR       = 4;
+    const STATUS_NOT_WEBSITE = 3;
+    const STATUS_API_ERROR = 4;
 
     private $messages = [
-        self::STATUS_WEBSITE_IS_UP   => 'It\'s just you. %s is up.',
-        self::STATUS_WEBSITE_IS_DOWN => 'It\'s not just you! %s looks down from here.',
-        self::STATUS_NOT_WEBSITE     => 'Huh? %s doesn\'t look like a site.',
-        self::STATUS_API_ERROR       => 'Sorry! API is not available right now!'
+        self::STATUS_WEBSITE_IS_UP => "It's just you. %s is up.",
+        self::STATUS_WEBSITE_IS_DOWN => "It's not just you! %s looks down from here.",
+        self::STATUS_NOT_WEBSITE => "Huh? %s doesn't look like a site.",
+        self::STATUS_API_ERROR => "Sorry! API is not available right now!"
     ];
 
-    protected $url = 'http://isitup.org/%s.json';
+    /** @var IsItUpOrgClient */
+    private $client;
+
+    /** @var Logger */
+    private $logger;
+
+    public function __construct(IsItUpOrgClient $client, Logger $logger)
+    {
+        $this->client = $client;
+        $this->logger = $logger;
+    }
 
     public function check($domain)
     {
         $status = $this->getStatus($domain);
 
-        echo sprintf($this->messages[$status], $domain);
-        echo "\n";
+        $this->logger->write(sprintf($this->getMessagePattern($status), $domain));
     }
 
-    protected function getStatus($domain)
+    private function getStatus($domain)
     {
-        $opts = [
-            'http' => array(
-                'method' => "GET",
-                'header' => "User-Agent: github.com/alexsoft/isup.php\r\n"
-            )
-        ];
-
-        $context = stream_context_create($opts);
-
-        $content = json_decode(file_get_contents(sprintf($this->url, $domain), false, $context), true);
+        $content = $this->client->getContent($domain);
 
         if (false === $content) {
             return static::STATUS_API_ERROR;
         }
 
         return $content['status_code'];
+    }
+
+    /**
+     * @param int $status
+     * @return string
+     * @throws UnexpectedResponseStatusException
+     */
+    private function getMessagePattern($status)
+    {
+        if (!array_key_exists($status, $this->messages)) {
+            throw UnexpectedResponseStatusException::withStatus($status);
+        }
+
+        return $this->messages[$status];
     }
 }

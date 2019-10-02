@@ -10,11 +10,12 @@
   "authors": [
     {
       "name": "Alex Plekhanov",
-      "email": "alex@plekhanov.us"
+      "email": "alex@plekhanov.dev"
     }
   ],
   "require": {
-    "php": ">=5.4.0"
+    "php": ">=5.4.0",
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {

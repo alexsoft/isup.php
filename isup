@@ -1,6 +1,9 @@
 #! /usr/bin/env php
 <?php
 
+use Alexsoft\Isup\Check;
+use Alexsoft\Isup\IsItUpOrgClient;
+use Alexsoft\Isup\Logger;
 
 if (file_exists(__DIR__.'/../../autoload.php')) {
     require __DIR__.'/../../autoload.php';
@@ -8,16 +11,19 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
     require __DIR__.'/vendor/autoload.php';
 }
 
+$logger = new Logger();
+
 if ($argc < 2) {
-    echo "Please specify site you want to check!\n";
+    $logger->write('Please specify site you want to check!');
     exit(1);
 }
 
-$domains = $argv;
-array_shift($domains);
+$domains = array_slice($argv, 1);
+
+$checker = new Check(new IsItUpOrgClient(), $logger);
 
 foreach ($domains as $domain) {
-    (new Alexsoft\Isup\Check)->check($domain);
+    $checker->check($domain);
 }
 
 exit(0);
