@@ -22,11 +22,6 @@
       "Alexsoft\\Isup\\": "src/"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "Alexsoft\\Isup\\Tests\\": "tests/"
-    }
-  },
   "bin": [
     "isup"
   ],

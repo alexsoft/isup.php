@@ -19,7 +19,7 @@ class Check
         self::STATUS_WEBSITE_IS_UP => "It's just you. %s is up.",
         self::STATUS_WEBSITE_IS_DOWN => "It's not just you! %s looks down from here.",
         self::STATUS_NOT_WEBSITE => "Huh? %s doesn't look like a site.",
-        self::STATUS_API_ERROR => "Sorry! API is not available right now!",
+        self::STATUS_API_ERROR => 'Sorry! API is not available right now!',
     ];
 
     private ClientInterface $client;
